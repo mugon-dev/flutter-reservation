@@ -1,0 +1,1 @@
+enum TIMETYPE { AM, PM }
