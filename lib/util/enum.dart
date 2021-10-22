@@ -1,1 +1,2 @@
 enum TIMETYPE { AM, PM }
+enum CARDTYPE { NONE, BUTTON, STAR }

@@ -14,7 +14,7 @@ class Time {
 List<Time> sampleAM = [
   Time(time: "09:00"),
   Time(time: "09:30", possible: false),
-  Time(time: "10:00"),
+  Time(time: "10:00", possible: false),
   Time(time: "10:30"),
   Time(time: "11:00", possible: false),
   Time(time: "11:30"),

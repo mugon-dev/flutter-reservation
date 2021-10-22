@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mypet_reservation/controller/point_controller.dart';
 import 'package:mypet_reservation/controller/reservation_controller.dart';
 import 'package:mypet_reservation/view/home_page.dart';
 
@@ -18,6 +19,7 @@ class MyApp extends StatelessWidget {
       ),
       initialBinding: BindingsBuilder(() {
         Get.put(ReservationController());
+        Get.put(PointController());
       }),
       home: const HomePage(),
     );

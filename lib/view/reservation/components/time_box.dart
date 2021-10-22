@@ -13,21 +13,24 @@ class TimeBox extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text('오전', style: textStyle()),
+        Text('오전', style: textStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 14),
         Wrap(
           spacing: 8,
           runSpacing: 12,
           children: List.generate(reservationController.sampleAm.length,
               (index) => _timeBoxItem(index, TIMETYPE.AM)),
         ),
-        Text('오후', style: textStyle()),
+        const SizedBox(height: 30),
+        Text('오후', style: textStyle(fontWeight: FontWeight.bold)),
+        const SizedBox(height: 14),
         Wrap(
           spacing: 8,
           runSpacing: 12,
           children: List.generate(reservationController.samplePm.length,
               (index) => _timeBoxItem(index, TIMETYPE.PM)),
         ),
-        const SizedBox(height: 22),
+        const SizedBox(height: 15),
         Row(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
