@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:mypet_reservation/domain/date_time_reservation.dart';
 import 'package:mypet_reservation/domain/time.dart';
 import 'package:mypet_reservation/util/enum.dart';
 import 'package:mypet_reservation/util/extension.dart';
@@ -19,10 +20,20 @@ class ReservationController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    sampleAm(sampleAM);
-    samplePm(samplePM);
     today();
     super.onInit();
+  }
+
+  // 특정 날짜에 맞춰 예약 가능 불가능 리스트 출력
+  setDateAmTime(String getDate) {
+    String getDate = date.value; // 선택한 날짜 받아옴
+    // 받아온 날짜로 시간대별 예약 가능 여부 가져오기
+    return sampleDateTime.firstWhere((data) => data.date == getDate).amTime;
+  }
+
+  setDatePmTime(String getDate) {
+    String getDate = date.value;
+    return sampleDateTime.firstWhere((data) => data.date == getDate).pmTime;
   }
 
   void dropdownToggle() {
@@ -67,6 +78,8 @@ class ReservationController extends GetxController {
     String weekend = DateFormat('EEEE').format(todayDate);
     String? wholeDate = dayMonth + weekend.weekendTr()!;
     date(wholeDate);
+    sampleAm(setDateAmTime(wholeDate));
+    samplePm(setDatePmTime(wholeDate));
   }
 
   void datePicker(BuildContext context) {
@@ -82,6 +95,8 @@ class ReservationController extends GetxController {
       String weekend = DateFormat('EEEE').format(pickedDate);
       String? wholeDate = dayMonth + weekend.weekendTr()!;
       date(wholeDate);
+      sampleAm(setDateAmTime(wholeDate));
+      samplePm(setDatePmTime(wholeDate));
     });
   }
 }
