@@ -26,13 +26,11 @@ class ReservationController extends GetxController {
 
   // 특정 날짜에 맞춰 예약 가능 불가능 리스트 출력
   setDateAmTime(String getDate) {
-    String getDate = date.value; // 선택한 날짜 받아옴
     // 받아온 날짜로 시간대별 예약 가능 여부 가져오기
     return sampleDateTime.firstWhere((data) => data.date == getDate).amTime;
   }
 
   setDatePmTime(String getDate) {
-    String getDate = date.value;
     return sampleDateTime.firstWhere((data) => data.date == getDate).pmTime;
   }
 
@@ -41,9 +39,6 @@ class ReservationController extends GetxController {
   }
 
   void pickItem(int index, TIMETYPE type) {
-    if (!sampleAm[index].possible || !samplePm[index].possible) {
-      Get.defaultDialog(title: '예약불가능', middleText: '예약 불가능한 시간입니다.');
-    }
     pickValidation(index, type);
     int count = sampleAm.where((c) => c.pick == true).toList().length +
         samplePm.where((c) => c.pick == true).toList().length;
@@ -78,10 +73,13 @@ class ReservationController extends GetxController {
     String weekend = DateFormat('EEEE').format(todayDate);
     String? wholeDate = dayMonth + weekend.weekendTr()!;
     date(wholeDate);
-    sampleAm(setDateAmTime(wholeDate));
-    samplePm(setDatePmTime(wholeDate));
+    sampleAm([...setDateAmTime(wholeDate)]);
+    samplePm([...setDatePmTime(wholeDate)]);
   }
 
+  // 예약 페이지에서 달력 open
+  // 특정 날짜 누르면 date에 포맷팅된 날짜 입력
+  // 선택한 날짜에 맞는 시간 별 예약 가능 불가능 여부 추가 및 선택 값 초기화
   void datePicker(BuildContext context) {
     showDatePicker(
       context: context,
@@ -95,8 +93,10 @@ class ReservationController extends GetxController {
       String weekend = DateFormat('EEEE').format(pickedDate);
       String? wholeDate = dayMonth + weekend.weekendTr()!;
       date(wholeDate);
-      sampleAm(setDateAmTime(wholeDate));
-      samplePm(setDatePmTime(wholeDate));
+      sampleAm([...setDateAmTime(wholeDate)])
+          .where((element) => element.pick = false);
+      samplePm([...setDatePmTime(wholeDate)])
+          .where((element) => element.pick = false);
     });
   }
 }

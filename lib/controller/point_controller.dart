@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:mypet_reservation/domain/point.dart';
 
 class PointController extends GetxController {
@@ -12,7 +13,7 @@ class PointController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     // 전체 포인트 내역
-    pointList(samplePoint);
+    pointList([...dateTimeConvertDto(samplePoint)]);
     filterPointList(POINTFILTERTYPE.WHOLE);
   }
 
@@ -35,7 +36,8 @@ class PointController extends GetxController {
           if (element.pointUsage
               .where((data) =>
                   data.pointType == POINTTYPE.BOUNS ||
-                  data.pointType == POINTTYPE.RESERVATION)
+                  data.pointType == POINTTYPE.RESERVATION ||
+                  data.pointType == POINTTYPE.PURCHASE)
               .isNotEmpty) {
             filterList.add(
               Point(
@@ -43,7 +45,8 @@ class PointController extends GetxController {
                   pointUsage: element.pointUsage
                       .where((data) =>
                           data.pointType == POINTTYPE.BOUNS ||
-                          data.pointType == POINTTYPE.RESERVATION)
+                          data.pointType == POINTTYPE.RESERVATION ||
+                          data.pointType == POINTTYPE.PURCHASE)
                       .toList()),
             );
           }
@@ -66,7 +69,45 @@ class PointController extends GetxController {
         break;
     }
     // 정렬
-    for (var element in filterList) {}
-    pointFilterList([...filterList]);
+    pointFilterList([...dateTimeConvertDto(filterList)]);
+  }
+
+  // String -> DateTimeFormat
+  String stringToDateTimeFormat(String date) {
+    date = date.replaceAll(".", "-");
+    List splitData = date.split("-");
+    late String month;
+    late String day;
+    if (splitData[0].toString().length == 1) {
+      month = "0" + splitData[0].toString();
+    } else {
+      month = splitData[0].toString();
+    }
+    if (splitData[1].toString().length == 1) {
+      day = "0" + splitData[1].toString();
+    } else {
+      day = splitData[1].toString();
+    }
+    date = "2021-" + month + day;
+    return date;
+  }
+
+  // 정렬을 위해 날짜를 DateTime으로 변환 후 리스트로 만들고 최근 순으로 sort
+  List<Point> dateTimeConvertDto(List<Point> beforeSort) {
+    List<PointDto> dtoList = [];
+    for (var element in beforeSort) {
+      dtoList.add(PointDto(
+          date: DateTime.parse(stringToDateTimeFormat(element.date)),
+          pointUsage: element.pointUsage));
+    }
+    dtoList.sort((a, b) => b.date.compareTo(a.date));
+    // 다시 날짜를 원하는 포맷으로 변경
+    List<Point> sortList = [];
+    for (var element in dtoList) {
+      sortList.add(Point(
+          date: DateFormat('MM.dd').format(element.date),
+          pointUsage: element.pointUsage));
+    }
+    return sortList;
   }
 }

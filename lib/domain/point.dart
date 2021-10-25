@@ -26,6 +26,17 @@ class PointUsage {
       };
 }
 
+class PointDto {
+  final DateTime date;
+  final List<PointUsage> pointUsage;
+
+  PointDto({required this.date, required this.pointUsage});
+  Map<String, dynamic> toJson() => {
+        'date': date.toString(),
+        'pointUsage': pointUsage.map((e) => e.toJson()).toList(),
+      };
+}
+
 List<Point> samplePoint = [
   Point(
     date: '9.15',

@@ -75,8 +75,12 @@ class TimeBox extends StatelessWidget {
     }
     return Obx(() => GestureDetector(
           onTap: () {
-            // index를 받아 PICK의 현재 BOOL값을 역으로 바꿈
-            reservationController.pickItem(index, type);
+            if (sample[index].possible == false) {
+              Get.defaultDialog(title: '예약불가능', middleText: '예약 불가능한 시간입니다.');
+            } else {
+              // index를 받아 PICK의 현재 BOOL값을 역으로 바꿈
+              reservationController.pickItem(index, type);
+            }
           },
           child: Container(
             alignment: Alignment.center,
