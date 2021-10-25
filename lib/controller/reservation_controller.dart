@@ -45,7 +45,18 @@ class ReservationController extends GetxController {
     if (count >= 2) {
       Get.defaultDialog(title: '중복선택', middleText: '하나만 선택가능합니다.');
       pickValidation(index, type);
+      pickTime(getBeforePicked(type));
     }
+  }
+
+  String getBeforePicked(TIMETYPE type) {
+    if (type == TIMETYPE.AM) {
+      return sampleAm.firstWhere((e) => e.pick == true).time;
+    }
+    if (type == TIMETYPE.PM) {
+      return samplePm.firstWhere((e) => e.pick == true).time;
+    }
+    return '';
   }
 
   void pickValidation(int index, TIMETYPE type) {
