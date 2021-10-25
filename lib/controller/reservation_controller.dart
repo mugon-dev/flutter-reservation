@@ -10,7 +10,6 @@ import 'package:mypet_reservation/util/extension.dart';
 class ReservationController extends GetxController {
   static ReservationController get to => Get.find();
   RxBool possible = true.obs;
-  RxBool impossible = false.obs;
   RxBool pick = false.obs;
   RxList<Time> sampleAm = <Time>[].obs;
   RxList<Time> samplePm = <Time>[].obs;
