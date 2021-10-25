@@ -93,10 +93,14 @@ class ReservationController extends GetxController {
       String weekend = DateFormat('EEEE').format(pickedDate);
       String? wholeDate = dayMonth + weekend.weekendTr()!;
       date(wholeDate);
-      sampleAm([...setDateAmTime(wholeDate)])
-          .where((element) => element.pick = false);
-      samplePm([...setDatePmTime(wholeDate)])
-          .where((element) => element.pick = false);
+      // 날짜 변경 시 선택 값 초기화
+      sampleAm([...setDateAmTime(wholeDate)]).forEach((element) {
+        element.pick = false;
+      });
+      samplePm([...setDatePmTime(wholeDate)]).forEach((element) {
+        element.pick = false;
+      });
+      pickTime('');
     });
   }
 }
