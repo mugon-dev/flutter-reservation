@@ -1,59 +1,80 @@
-enum POINTTYPE { PURCHASE, BOUNS, RESERVATION }
+enum POINTTYPE { PURCHASE, BOUNS, RESERVATION, USEPOINT }
+enum POINTFILTERTYPE { WHOLE, SAVE, USE }
 
 class Point {
   final String date;
+  final List<PointUsage> pointUsage;
+
+  Point({required this.date, required this.pointUsage});
+  Map<String, dynamic> toJson() => {
+        'date': date,
+        'pointUsage': pointUsage.map((e) => e.toJson()).toList(),
+      };
+}
+
+class PointUsage {
   final POINTTYPE pointType;
   final String address;
   final String usePoint;
 
-  Point(
-      {required this.date,
-      required this.pointType,
-      required this.address,
-      required this.usePoint});
+  PointUsage(
+      {required this.pointType, required this.address, required this.usePoint});
+  Map<String, dynamic> toJson() => {
+        "pointType": pointType.toString(),
+        "address": address,
+        "usePoint": usePoint,
+      };
 }
 
 List<Point> samplePoint = [
   Point(
     date: '9.15',
-    pointType: POINTTYPE.RESERVATION,
-    address: '더건강한펫케어',
-    usePoint: '1',
+    pointUsage: [
+      PointUsage(
+        pointType: POINTTYPE.RESERVATION,
+        address: '더건강한펫케어',
+        usePoint: '1',
+      ),
+      PointUsage(
+        pointType: POINTTYPE.RESERVATION,
+        address: '러브펫',
+        usePoint: '1',
+      ),
+    ],
   ),
   Point(
     date: '9.12',
-    pointType: POINTTYPE.RESERVATION,
-    address: '러브펫',
-    usePoint: '1',
-  ),
-  Point(
-    date: '9.12',
-    pointType: POINTTYPE.BOUNS,
-    address: '',
-    usePoint: '1',
-  ),
-  Point(
-    date: '9.12',
-    pointType: POINTTYPE.RESERVATION,
-    address: '놀이터',
-    usePoint: '1',
+    pointUsage: [
+      PointUsage(
+        pointType: POINTTYPE.BOUNS,
+        address: '',
+        usePoint: '1',
+      ),
+      PointUsage(
+        pointType: POINTTYPE.RESERVATION,
+        address: '놀이터',
+        usePoint: '1',
+      ),
+    ],
   ),
   Point(
     date: '9.7',
-    pointType: POINTTYPE.PURCHASE,
-    address: '스튜디오펫',
-    usePoint: '-1',
-  ),
-  Point(
-    date: '9.15',
-    pointType: POINTTYPE.RESERVATION,
-    address: '더건강한펫케어',
-    usePoint: '1',
+    pointUsage: [
+      PointUsage(
+        pointType: POINTTYPE.USEPOINT,
+        address: '스튜디오펫',
+        usePoint: '-1',
+      ),
+    ],
   ),
   Point(
     date: '8.24',
-    pointType: POINTTYPE.PURCHASE,
-    address: '더건강한펫케어',
-    usePoint: '1',
+    pointUsage: [
+      PointUsage(
+        pointType: POINTTYPE.PURCHASE,
+        address: '더건강한펫케어',
+        usePoint: '1',
+      ),
+    ],
   ),
 ];

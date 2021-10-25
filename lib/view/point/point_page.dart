@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:mypet_reservation/controller/point_controller.dart';
+import 'package:mypet_reservation/domain/point.dart';
 import 'package:mypet_reservation/util/text_theme.dart';
+
+import 'components/point_list.dart';
 
 class PointPage extends StatelessWidget {
   PointPage({Key? key}) : super(key: key);
   PointController pointController = Get.find();
-
+  final List<String> filter = ['전체내역', '적립내역', '사용내역'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,10 +89,20 @@ class PointPage extends StatelessWidget {
                   style: textStyle(fontWeight: FontWeight.bold, size: 15.0),
                   onChanged: (String? newValue) {
                     pointController.dropdownValue.value = newValue!;
+                    switch (filter.indexOf(newValue)) {
+                      case 0:
+                        pointController.filterPointList(POINTFILTERTYPE.WHOLE);
+                        break;
+                      case 1:
+                        pointController.filterPointList(POINTFILTERTYPE.SAVE);
+                        break;
+                      case 2:
+                        pointController.filterPointList(POINTFILTERTYPE.USE);
+                        break;
+                    }
                   },
                   underline: DropdownButtonHideUnderline(child: Container()),
-                  items: <String>['전체내역', '적립내역', '사용내역']
-                      .map<DropdownMenuItem<String>>((String value) {
+                  items: filter.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
@@ -97,83 +110,7 @@ class PointPage extends StatelessWidget {
                   }).toList(),
                 )),
           ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('9.15', style: textStyle(size: 15)),
-                      const SizedBox(width: 15),
-                      Expanded(
-                        child: ListView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('예약적립',
-                                        style: textStyle(
-                                            size: 16,
-                                            fontWeight: FontWeight.bold)),
-                                    Row(
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/icons/icon_star.svg',
-                                            width: 12,
-                                            height: 12),
-                                        Text(
-                                          '1',
-                                          style: textStyle(
-                                              size: 15,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                Text('더건강한펫케어',
-                                    style: textStyle(size: 13, opacity: 0.38)),
-                                const SizedBox(height: 15),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('예약적립',
-                                    style: textStyle(
-                                        size: 16, fontWeight: FontWeight.bold)),
-                                Text('더건강한펫케어',
-                                    style: textStyle(size: 13, opacity: 0.38)),
-                                const SizedBox(height: 15),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ],
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const Divider(
-                    height: 19,
-                    thickness: 1,
-                    color: Color(0xfff6f6f6),
-                  );
-                },
-                itemCount: 5,
-              ),
-            ),
-          )
+          const PointList()
         ],
       ),
     );

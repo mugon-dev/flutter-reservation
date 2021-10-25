@@ -53,13 +53,17 @@ class ReservationPage extends StatelessWidget {
                     _divider(),
                     const SizedBox(height: 40),
                     Obx(
-                      () => AnimatedOpacity(
-                        opacity:
-                            ReservationController.to.visible.value ? 1.0 : 0.0,
-                        duration: const Duration(milliseconds: 100),
-                        child: TimeBox(),
+                      () => IgnorePointer(
+                        ignoring: !ReservationController.to.visible.value,
+                        child: AnimatedOpacity(
+                          opacity: ReservationController.to.visible.value
+                              ? 1.0
+                              : 0.0,
+                          duration: const Duration(milliseconds: 100),
+                          child: TimeBox(),
+                        ),
                       ),
-                    )
+                    ),
                   ],
                 ),
               ],

@@ -17,7 +17,7 @@ class TimeBox extends StatelessWidget {
         const SizedBox(height: 14),
         Wrap(
           spacing: 8,
-          runSpacing: 12,
+          runSpacing: 10,
           children: List.generate(reservationController.sampleAm.length,
               (index) => _timeBoxItem(index, TIMETYPE.AM)),
         ),
@@ -26,7 +26,7 @@ class TimeBox extends StatelessWidget {
         const SizedBox(height: 14),
         Wrap(
           spacing: 8,
-          runSpacing: 12,
+          runSpacing: 10,
           children: List.generate(reservationController.samplePm.length,
               (index) => _timeBoxItem(index, TIMETYPE.PM)),
         ),
@@ -67,7 +67,7 @@ class TimeBox extends StatelessWidget {
     int index,
     TIMETYPE type,
   ) {
-    RxList<Time> sample;
+    List<Time> sample;
     if (type == TIMETYPE.AM) {
       sample = reservationController.sampleAm;
     } else {
