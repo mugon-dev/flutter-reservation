@@ -34,7 +34,7 @@ class ReservationPage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         bottom: const PreferredSize(
-            child: SizedBox(), preferredSize: Size.fromHeight(10)),
+            preferredSize: Size.fromHeight(10), child: SizedBox()),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -102,7 +102,7 @@ class ReservationPage extends StatelessWidget {
   }
 
   Widget _timePick(Icon icon) {
-    ReservationController reservationController = Get.find();
+    var reservationController = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
       child: Row(
@@ -139,7 +139,7 @@ class ReservationPage extends StatelessWidget {
   }
 
   Widget _datePick(Icon icon, BuildContext context) {
-    ReservationController reservationController = Get.find();
+    var reservationController = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
       child: Row(

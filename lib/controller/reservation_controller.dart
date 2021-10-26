@@ -9,6 +9,7 @@ import 'package:mypet_reservation/util/extension.dart';
 
 class ReservationController extends GetxController {
   static ReservationController get to => Get.find();
+  List<DateTimeReservation> initDate = <DateTimeReservation>[];
   RxBool possible = true.obs;
   RxBool pick = false.obs;
   RxList<Time> sampleAm = <Time>[].obs;
@@ -20,17 +21,26 @@ class ReservationController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     today();
+    initDate = sampleDateTime;
     super.onInit();
   }
 
   // 특정 날짜에 맞춰 예약 가능 불가능 리스트 출력
-  setDateAmTime(String getDate) {
+  void setDateAmTime(String getDate) {
     // 받아온 날짜로 시간대별 예약 가능 여부 가져오기
-    return sampleDateTime.firstWhere((data) => data.date == getDate).amTime;
+    for (var element in initDate) {
+      if (element.date == getDate) {
+        sampleAm([...element.amTime]);
+      }
+    }
   }
 
-  setDatePmTime(String getDate) {
-    return sampleDateTime.firstWhere((data) => data.date == getDate).pmTime;
+  void setDatePmTime(String getDate) {
+    for (var element in initDate) {
+      if (element.date == getDate) {
+        samplePm([...element.pmTime]);
+      }
+    }
   }
 
   void dropdownToggle() {
@@ -39,7 +49,7 @@ class ReservationController extends GetxController {
 
   void pickItem(int index, TIMETYPE type) {
     pickValidation(index, type);
-    int count = sampleAm.where((c) => c.pick == true).toList().length +
+    var count = sampleAm.where((c) => c.pick == true).toList().length +
         samplePm.where((c) => c.pick == true).toList().length;
     if (count >= 2) {
       Get.defaultDialog(title: '중복선택', middleText: '하나만 선택가능합니다.');
@@ -79,12 +89,12 @@ class ReservationController extends GetxController {
 
   void today() {
     var todayDate = DateTime.now();
-    String dayMonth = DateFormat('MM.dd').format(todayDate);
-    String weekend = DateFormat('EEEE').format(todayDate);
+    var dayMonth = DateFormat('MM.dd').format(todayDate);
+    var weekend = DateFormat('EEEE').format(todayDate);
     String? wholeDate = dayMonth + weekend.weekendTr()!;
     date(wholeDate);
-    sampleAm([...setDateAmTime(wholeDate)]);
-    samplePm([...setDatePmTime(wholeDate)]);
+    setDateAmTime(wholeDate);
+    setDatePmTime(wholeDate);
   }
 
   // 예약 페이지에서 달력 open
@@ -99,17 +109,19 @@ class ReservationController extends GetxController {
       lastDate: DateTime(2022, 1, 1),
     ).then((pickedDate) {
       pickedDate ??= DateTime.now();
-      String dayMonth = DateFormat('MM.dd').format(pickedDate);
-      String weekend = DateFormat('EEEE').format(pickedDate);
+      var dayMonth = DateFormat('MM.dd').format(pickedDate);
+      var weekend = DateFormat('EEEE').format(pickedDate);
       String? wholeDate = dayMonth + weekend.weekendTr()!;
       date(wholeDate);
       // 날짜 변경 시 선택 값 초기화
-      sampleAm([...setDateAmTime(wholeDate)]).forEach((element) {
+      setDateAmTime(wholeDate);
+      setDatePmTime(wholeDate);
+      for (var element in sampleAm) {
         element.pick = false;
-      });
-      samplePm([...setDatePmTime(wholeDate)]).forEach((element) {
+      }
+      for (var element in samplePm) {
         element.pick = false;
-      });
+      }
       pickTime('');
     });
   }

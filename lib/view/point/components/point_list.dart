@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
-import 'package:mypet_reservation/controller/point_controller.dart';
 import 'package:mypet_reservation/domain/point.dart';
 import 'package:mypet_reservation/util/text_theme.dart';
 
@@ -12,7 +11,7 @@ class PointList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PointController pointController = Get.find();
+    var pointController = Get.find();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -59,11 +58,11 @@ class PointList extends StatelessWidget {
   }
 
   Widget detailListItem(PointUsage pointUsage) {
-    Map<POINTTYPE, String> pointTypeTr = {
-      POINTTYPE.RESERVATION: "예약 적립",
-      POINTTYPE.BOUNS: "보너스 적립",
-      POINTTYPE.PURCHASE: "구매 적립",
-      POINTTYPE.USEPOINT: "결제 시 사용",
+    var pointTypeTr = <POINTTYPE, String>{
+      POINTTYPE.RESERVATION: '예약 적립',
+      POINTTYPE.BOUNS: '보너스 적립',
+      POINTTYPE.PURCHASE: '구매 적립',
+      POINTTYPE.USEPOINT: '결제 시 사용',
     };
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

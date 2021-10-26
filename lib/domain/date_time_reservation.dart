@@ -11,7 +11,7 @@ class DateTimeReservation {
 
 List<DateTimeReservation> sampleDateTime = [
   DateTimeReservation(
-    date: "10.23(토)",
+    date: "10.24(일)",
     amTime: [
       Time(time: "09:00"),
       Time(time: "09:30", possible: false),
@@ -36,7 +36,7 @@ List<DateTimeReservation> sampleDateTime = [
     ],
   ),
   DateTimeReservation(
-    date: "10.24(일)",
+    date: "10.25(월)",
     amTime: [
       Time(time: "09:00"),
       Time(time: "09:30", possible: false),
@@ -61,7 +61,7 @@ List<DateTimeReservation> sampleDateTime = [
     ],
   ),
   DateTimeReservation(
-    date: "10.25(월)",
+    date: "10.26(화)",
     amTime: [
       Time(time: "09:00"),
       Time(time: "09:30"),

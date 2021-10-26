@@ -21,7 +21,7 @@ class ReservationListCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String visit = visitToggle ? '방문완료' : '방문예정';
+    var visit = visitToggle ? '방문완료' : '방문예정';
     return Padding(
       padding: const EdgeInsets.only(right: 20, left: 20, bottom: 16),
       child: Container(
@@ -94,7 +94,6 @@ class ReservationListCard extends StatelessWidget {
               const Divider(thickness: 1, color: Colors.grey),
               TextButton(
                 onPressed: () {},
-                child: const Text('리뷰작성'),
                 style: TextButton.styleFrom(
                   primary: Colors.black,
                   backgroundColor: Colors.grey.shade100,
@@ -103,6 +102,7 @@ class ReservationListCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8.0),
                   ),
                 ),
+                child: const Text('리뷰작성'),
               ),
             ],
           );

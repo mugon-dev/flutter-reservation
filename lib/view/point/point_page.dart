@@ -31,7 +31,7 @@ class PointPage extends StatelessWidget {
         elevation: 0.0,
         backgroundColor: Colors.transparent,
         bottom: const PreferredSize(
-            child: SizedBox(), preferredSize: Size.fromHeight(10)),
+            preferredSize: Size.fromHeight(10), child: SizedBox()),
       ),
       body: Column(
         children: [

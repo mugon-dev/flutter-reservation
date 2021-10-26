@@ -20,9 +20,9 @@ class PointUsage {
   PointUsage(
       {required this.pointType, required this.address, required this.usePoint});
   Map<String, dynamic> toJson() => {
-        "pointType": pointType.toString(),
-        "address": address,
-        "usePoint": usePoint,
+        'pointType': pointType.toString(),
+        'address': address,
+        'usePoint': usePoint,
       };
 }
 
