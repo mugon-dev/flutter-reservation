@@ -46,11 +46,15 @@ void main() {
       String data = element.locdate.toString();
       data = data.substring(0, 4) +
           "-" +
-          data.substring(5, 6) +
+          data.substring(4, 6) +
           '-' +
-          data.substring(7, 8);
+          data.substring(6, 8);
       holidayList.add(data);
     }
+    // 쉬는날 리스트
+    holidayList.forEach((element) {
+      print(element);
+    });
     // 7일 데이터 세팅
     Map<int, dynamic> setWeekTimeTable = {
       1: getTimeTableList(
