@@ -20,8 +20,8 @@ class ReservationController extends GetxController {
   @override
   void onInit() {
     // TODO: implement onInit
-    today();
     initDate = sampleDateTime;
+    today();
     super.onInit();
   }
 
@@ -60,10 +60,10 @@ class ReservationController extends GetxController {
 
   String getBeforePicked(TIMETYPE type) {
     if (type == TIMETYPE.AM) {
-      return sampleAm.firstWhere((e) => e.pick == true).time;
+      return sampleAm.singleWhere((e) => e.pick == true).time;
     }
     if (type == TIMETYPE.PM) {
-      return samplePm.firstWhere((e) => e.pick == true).time;
+      return samplePm.singleWhere((e) => e.pick == true).time;
     }
     return '';
   }

@@ -102,7 +102,6 @@ class ReservationPage extends StatelessWidget {
   }
 
   Widget _timePick(Icon icon) {
-    var reservationController = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
       child: Row(
@@ -117,17 +116,17 @@ class ReservationPage extends StatelessWidget {
                 width: 19,
               ),
               const SizedBox(width: 15),
-              Obx(() => Text(reservationController.pickTime.value,
+              Obx(() => Text(ReservationController.to.pickTime.value,
                   style: textStyle())),
             ],
           ),
           GestureDetector(
               onTap: () {
-                reservationController.dropdownToggle();
+                ReservationController.to.dropdownToggle();
               },
               child: Obx(
                 () => Icon(
-                  reservationController.visible.value
+                  ReservationController.to.visible.value
                       ? CupertinoIcons.chevron_up
                       : CupertinoIcons.chevron_down,
                   size: 19,
@@ -139,7 +138,6 @@ class ReservationPage extends StatelessWidget {
   }
 
   Widget _datePick(Icon icon, BuildContext context) {
-    var reservationController = Get.find();
     return Padding(
       padding: const EdgeInsets.only(top: 10.0, bottom: 8.0),
       child: Row(
@@ -154,13 +152,13 @@ class ReservationPage extends StatelessWidget {
                 width: 19,
               ),
               const SizedBox(width: 15),
-              Obx(() =>
-                  Text(reservationController.date.value, style: textStyle())),
+              Obx(() => Text(ReservationController.to.date.value,
+                  style: textStyle())),
             ],
           ),
           GestureDetector(
             onTap: () {
-              reservationController.datePicker(context);
+              ReservationController.to.datePicker(context);
             },
             child: const Icon(
               CupertinoIcons.chevron_down,

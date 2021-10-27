@@ -10,7 +10,6 @@ import 'components/point_list.dart';
 
 class PointPage extends StatelessWidget {
   PointPage({Key? key}) : super(key: key);
-  PointController pointController = Get.find();
   final List<String> filter = ['전체내역', '적립내역', '사용내역'];
   @override
   Widget build(BuildContext context) {
@@ -83,21 +82,23 @@ class PointPage extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             alignment: Alignment.centerLeft,
             child: Obx(() => DropdownButton<String>(
-                  value: pointController.dropdownValue.value,
+                  value: PointController.to.dropdownValue.value,
                   icon: const Icon(CupertinoIcons.chevron_down),
                   iconSize: 18,
                   style: textStyle(fontWeight: FontWeight.bold, size: 15.0),
                   onChanged: (String? newValue) {
-                    pointController.dropdownValue.value = newValue!;
+                    PointController.to.dropdownValue.value = newValue!;
                     switch (filter.indexOf(newValue)) {
                       case 0:
-                        pointController.filterPointList(POINTFILTERTYPE.WHOLE);
+                        PointController.to
+                            .filterPointList(POINTFILTERTYPE.WHOLE);
                         break;
                       case 1:
-                        pointController.filterPointList(POINTFILTERTYPE.SAVE);
+                        PointController.to
+                            .filterPointList(POINTFILTERTYPE.SAVE);
                         break;
                       case 2:
-                        pointController.filterPointList(POINTFILTERTYPE.USE);
+                        PointController.to.filterPointList(POINTFILTERTYPE.USE);
                         break;
                     }
                   },

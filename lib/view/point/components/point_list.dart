@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:mypet_reservation/controller/point_controller.dart';
 import 'package:mypet_reservation/domain/point.dart';
 import 'package:mypet_reservation/util/text_theme.dart';
 
@@ -11,7 +12,6 @@ class PointList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var pointController = Get.find();
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -20,8 +20,8 @@ class PointList extends StatelessWidget {
             shrinkWrap: true,
             // 날짜 기준 데이터 가져오기
             itemBuilder: (context, index) {
-              return Obx(
-                  () => dateListItem(pointController.pointFilterList[index]));
+              return Obx(() =>
+                  dateListItem(PointController.to.pointFilterList[index]));
             },
             separatorBuilder: (context, index) {
               return const Divider(
@@ -30,7 +30,7 @@ class PointList extends StatelessWidget {
                 color: Color(0xfff6f6f6),
               );
             },
-            itemCount: pointController.pointFilterList.length,
+            itemCount: PointController.to.pointFilterList.length,
           ),
         ),
       ),

@@ -6,8 +6,7 @@ import 'package:mypet_reservation/util/enum.dart';
 import 'package:mypet_reservation/util/text_theme.dart';
 
 class TimeBox extends StatelessWidget {
-  ReservationController reservationController = Get.find();
-  TimeBox({Key? key}) : super(key: key);
+  const TimeBox({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,7 +17,7 @@ class TimeBox extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 10,
-          children: List.generate(reservationController.sampleAm.length,
+          children: List.generate(ReservationController.to.sampleAm.length,
               (index) => _timeBoxItem(index, TIMETYPE.AM)),
         ),
         const SizedBox(height: 30),
@@ -27,7 +26,7 @@ class TimeBox extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 10,
-          children: List.generate(reservationController.samplePm.length,
+          children: List.generate(ReservationController.to.samplePm.length,
               (index) => _timeBoxItem(index, TIMETYPE.PM)),
         ),
         const SizedBox(height: 15),
@@ -69,9 +68,9 @@ class TimeBox extends StatelessWidget {
   ) {
     List<Time> sample;
     if (type == TIMETYPE.AM) {
-      sample = reservationController.sampleAm;
+      sample = ReservationController.to.sampleAm;
     } else {
-      sample = reservationController.samplePm;
+      sample = ReservationController.to.samplePm;
     }
     return Obx(() => GestureDetector(
           onTap: () {
@@ -79,7 +78,7 @@ class TimeBox extends StatelessWidget {
               Get.defaultDialog(title: '예약불가능', middleText: '예약 불가능한 시간입니다.');
             } else {
               // index를 받아 PICK의 현재 BOOL값을 역으로 바꿈
-              reservationController.pickItem(index, type);
+              ReservationController.to.pickItem(index, type);
             }
           },
           child: Container(

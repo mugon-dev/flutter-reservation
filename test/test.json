@@ -1,0 +1,58 @@
+{
+  "company": "회사",
+  "weekDay": "월",
+  "holiday": "end",
+  "dayDetail": {
+    "openTime": "",
+    "lunchTime": "",
+    "dinnerTime": ""
+  },
+  "company": "회사",
+  "weekDay": "화",
+  "holiday": "1,3",
+  "dayDetail": {
+    "openTime": "11:00-17:00",
+    "lunchTime": "13:00-14:00",
+    "dinnerTime": ""
+  },
+  "company": "회사",
+  "weekDay" :"수",
+  "holiday": "3",
+  "dayDetail": {
+    "openTime": "11:00-17:00",
+    "lunchTime": "",
+    "dinnerTime": ""
+  },
+  "company": "회사",
+  "weekDay" :"목",
+  "holiday": "1,end",
+  "dayDetail": {
+    "openTime": "11:00-17:00",
+    "lunchTime": "",
+    "dinnerTime": ""
+  },
+  "company": "회사",
+  "weekDay" :"금",
+  "holiday": "",
+  "dayDetail": {
+    "openTime": "11:00-20:00",
+    "lunchTime": "",
+    "dinnerTime": "17:00-18:00"
+  },
+  "company": "회사",
+  "weekDay" :"토",
+  "holiday": "",
+  "dayDetail": {
+    "openTime": "11:00-17:00",
+    "lunchTime": "",
+    "dinnerTime": ""
+  },
+  "company": "회사",
+  "weekDay" :"일",
+  "holiday": "",
+  "dayDetail": {
+    "openTime": "",
+    "lunchTime": "",
+    "dinnerTime": ""
+  }
+}
