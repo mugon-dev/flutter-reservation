@@ -4,6 +4,8 @@ import 'package:mypet_reservation/controller/point_controller.dart';
 import 'package:mypet_reservation/controller/reservation_controller.dart';
 import 'package:mypet_reservation/view/home_page.dart';
 
+import 'domain/reservation/reservation_controller.dart';
+
 void main() {
   runApp(const MyApp());
 }
@@ -20,6 +22,7 @@ class MyApp extends StatelessWidget {
       initialBinding: BindingsBuilder(() {
         Get.put(ReservationController());
         Get.put(PointController());
+        Get.put(ReservationControllerReal());
       }),
       home: const HomePage(),
     );

@@ -60,7 +60,7 @@ class ReservationPage extends StatelessWidget {
                               ? 1.0
                               : 0.0,
                           duration: const Duration(milliseconds: 100),
-                          child: TimeBox(),
+                          child: const TimeBox(),
                         ),
                       ),
                     ),

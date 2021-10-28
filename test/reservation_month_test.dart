@@ -147,9 +147,7 @@ Future<List<HolidayDto>> fetchData() async {
   xml2Json.parse(response.body);
   var jsonString = xml2Json.toParker();
   var data = jsonDecode(jsonString);
-  data = data["response"];
-  data = data["body"];
-  data = data["items"];
+  data = data["response"]["body"]["items"];
   List<dynamic> temp = data["item"];
   List<HolidayDto> holidays = temp.map((e) => HolidayDto.fromJson(e)).toList();
   return holidays;
@@ -308,7 +306,7 @@ List weekList({required DateTime dateTime}) {
   if (weekList.contains(nextMonthEndOfWeek)) {
     // 이번 달 마지막 주 월요일에 3일 더함
     DateTime lastWeek = weekList.last;
-    lastWeek = lastWeek.add(Duration(days: 3));
+    lastWeek = lastWeek.add(const Duration(days: 3));
     //  이번 달 말일이  마지막 주 목요일 전이라면 제거
     if (lastDate.isBefore(lastWeek)) {
       weekList.removeLast();

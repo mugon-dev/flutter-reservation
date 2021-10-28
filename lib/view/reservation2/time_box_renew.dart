@@ -5,8 +5,8 @@ import 'package:mypet_reservation/domain/time.dart';
 import 'package:mypet_reservation/util/enum.dart';
 import 'package:mypet_reservation/util/text_theme.dart';
 
-class TimeBox extends StatelessWidget {
-  const TimeBox({Key? key}) : super(key: key);
+class TimeBoxRenew extends StatelessWidget {
+  const TimeBoxRenew({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -17,6 +17,7 @@ class TimeBox extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 10,
+          // TODO: domain폴더 reservation controller 가져와서 amList 로 바꿔주기
           children: List.generate(ReservationController.to.sampleAm.length,
               (index) => _timeBoxItem(index, TIMETYPE.AM)),
         ),
@@ -26,6 +27,7 @@ class TimeBox extends StatelessWidget {
         Wrap(
           spacing: 8,
           runSpacing: 10,
+          // TODO: domain폴더 reservation controller 가져와서 pmList 로 바꿔주기
           children: List.generate(ReservationController.to.samplePm.length,
               (index) => _timeBoxItem(index, TIMETYPE.PM)),
         ),
@@ -68,6 +70,7 @@ class TimeBox extends StatelessWidget {
   ) {
     List<Time> sample;
     if (type == TIMETYPE.AM) {
+      // TODO: domain폴더 reservation controller 가져와서 amList 로 바꿔주기
       sample = ReservationController.to.sampleAm;
     } else {
       sample = ReservationController.to.samplePm;
