@@ -17,23 +17,25 @@ class ReservationControllerReal extends GetxController {
   static ReservationControllerReal get to => Get.find();
   final ReservationRepository _reservationRepository = ReservationRepository();
   final ReservationUtils _reservationUtils = ReservationUtils();
-  RxBool visible = false.obs;
-  late final List<CompanyTimeSchedule> companySchedule;
-  late List weekList;
-  List holidayList = [];
+  RxBool visible = false.obs; // timeBox 부분 보여주는 토글
+  late final List<CompanyTimeSchedule>
+      companySchedule; // api 통신으로 가져오는 회사의 주간 스케쥴
+  late List weekList; // 이번달 매주 월요일 리스트
+  List holidayList = []; // 매주 쉬는 날과 공휴일 리스트
   late String date;
-  late String firstDay;
-  late DateTime firstDate;
-  late DateTime lastDate;
-  late int monthDayNum;
-  final setWeekTimeTable = <TimeTableDto>[].obs;
-  final monthDayList = <Calendar>[].obs;
+  late String firstDay; // 이번달의 첫날
+  late DateTime firstDate; // 이번달의 첫날 형변환
+  late DateTime lastDate; // 마지막날
+  late int monthDayNum; // 이번달 총 일수
+  final setWeekTimeTable =
+      <TimeTableDto>[].obs; // 7일간의 타임테이블 (시간대별로 예약 가능 불가능 )
+  final monthDayList = <Calendar>[].obs; // 이번달 전체 스케쥴
 
-  // 달력용
-  RxList<Time> amList = <Time>[].obs;
-  RxList<Time> pmList = <Time>[].obs;
-  RxString pickTime = ''.obs;
-  RxString calendarDate = ''.obs;
+  // 화면용
+  RxList<Time> amList = <Time>[].obs; // 화면에 보여줄 오전리스트, 선택 가능불가능
+  RxList<Time> pmList = <Time>[].obs; // 화면에 보여줄 오후리스트, 선택 가능불가능
+  RxString pickTime = ''.obs; // 선택한 시간
+  RxString calendarDate = ''.obs; // 화면에 보여줄 날짜
 
   @override
   Future<void> onInit() async {
@@ -44,7 +46,7 @@ class ReservationControllerReal extends GetxController {
     today();
   }
 
-  // 특정 날짜에 맞춰 예약 가능 불가능 리스트 출력
+  // 특정 날짜에 맞춰 예약 가능 불가능 리스트 오전 오후 나눠 세팅
   void setDateTime(String getDate) {
     resetWeekTimeTable();
     List<Time> amList = <Time>[];
@@ -101,6 +103,7 @@ class ReservationControllerReal extends GetxController {
     }
   }
 
+  // 선택 불가능한 경우에 이전 값으로 보여주기
   String getBeforePicked(TIMETYPE type) {
     if (type == TIMETYPE.AM) {
       return amList.singleWhere((e) => e.pick == true).time;
@@ -183,6 +186,7 @@ class ReservationControllerReal extends GetxController {
     weekList = _reservationUtils.weekList(dateTime: DateTime.now());
   }
 
+  // 한달 스케쥴
   Future<void> getMonthData() async {
     List<Calendar> monthDayList = [];
     for (var i = 0; i < monthDayNum; i++) {
@@ -209,6 +213,7 @@ class ReservationControllerReal extends GetxController {
     this.monthDayList.value = monthDayList;
   }
 
+  // 각 요일별로 30분 단위의 영업시간 별 점심, 저녁 표시
   void resetWeekTimeTable() {
     List<TimeTableDto> temp = [];
     for (var element in companySchedule) {

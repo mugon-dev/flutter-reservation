@@ -22,6 +22,7 @@ class ReservationUtils {
     return weekday;
   }
 
+  // 특정 주의 쉬는 요일의 날짜를 리스트에 넣어 반환
   List getHoliday(
       {required List weekList,
       required String weekDay,
@@ -105,6 +106,7 @@ class ReservationUtils {
     return weekList;
   }
 
+  // 영업시간, 점심시간, 저녁시간을 받아 영업시간을 30분 단위로 나워 해당하는 시간 표시하여 리스트 반환
   List<TimeTable> getTimeTableList({
     required String wholeTime,
     required String lunchTime,
