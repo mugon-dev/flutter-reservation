@@ -26,7 +26,7 @@ class ReservationControllerReal extends GetxController {
   late DateTime firstDate;
   late DateTime lastDate;
   late int monthDayNum;
-  List<TimeTableDto> setWeekTimeTable = [];
+  final setWeekTimeTable = <TimeTableDto>[].obs;
   final monthDayList = <Calendar>[].obs;
 
   // 달력용
@@ -39,20 +39,27 @@ class ReservationControllerReal extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     initData();
-    today();
     await getHolidayListWeekTimeTable();
     await getMonthData();
+    today();
   }
 
   // 특정 날짜에 맞춰 예약 가능 불가능 리스트 출력
-  void setDateAmTime(String getDate) {
+  void setDateTime(String getDate) {
+    resetWeekTimeTable();
+    List<Time> amList = <Time>[];
+    List<Time> pmList = <Time>[];
     // 받아온 날짜로 시간대별 예약 가능 여부 가져오기
     for (var element in monthDayList) {
       if (element.dateTime == getDate) {
         List<TimeTable> temp = element.timeTableList;
         for (var data in temp) {
           if (data.isAm) {
-            if (data.isDinner || data.isLunch) {
+            if (element.isHoliday) {
+              amList.add(
+                Time(time: data.time, possible: false),
+              );
+            } else if (data.isDinner || data.isLunch) {
               amList.add(
                 Time(time: data.time, possible: false),
               );
@@ -62,7 +69,11 @@ class ReservationControllerReal extends GetxController {
               );
             }
           } else {
-            if (data.isDinner || data.isLunch) {
+            if (element.isHoliday) {
+              pmList.add(
+                Time(time: data.time, possible: false),
+              );
+            } else if (data.isDinner || data.isLunch) {
               pmList.add(
                 Time(time: data.time, possible: false),
               );
@@ -75,6 +86,8 @@ class ReservationControllerReal extends GetxController {
         }
       }
     }
+    this.amList.value = amList;
+    this.pmList.value = pmList;
   }
 
   void pickItem(int index, TIMETYPE type) {
@@ -123,13 +136,16 @@ class ReservationControllerReal extends GetxController {
     var weekend = DateFormat('EEEE').format(todayDate);
     String? wholeDate = dayMonth + weekend.weekendTr()!;
     calendarDate(wholeDate);
-    setDateAmTime(wholeDate);
+    setDateTime(todayDate.toString().substring(0, 10));
   }
 
   // 예약 페이지에서 달력 open
   // 특정 날짜 누르면 date에 포맷팅된 날짜 입력
   // 선택한 날짜에 맞는 시간 별 예약 가능 불가능 여부 추가 및 선택 값 초기화
   void datePicker(BuildContext context) {
+    if (visible.value) {
+      visible.value = !visible.value;
+    }
     showDatePicker(
       context: context,
       initialEntryMode: DatePickerEntryMode.calendarOnly,
@@ -143,7 +159,7 @@ class ReservationControllerReal extends GetxController {
       String? wholeDate = dayMonth + weekend.weekendTr()!;
       calendarDate(wholeDate);
       // 날짜 변경 시 선택 값 초기화
-      setDateAmTime(wholeDate);
+      setDateTime(pickedDate.toString().substring(0, 10));
       for (var element in amList) {
         element.pick = false;
       }
@@ -194,6 +210,20 @@ class ReservationControllerReal extends GetxController {
       print(element.toJson());
     });
     this.monthDayList.value = monthDayList;
+  }
+
+  void resetWeekTimeTable() {
+    List<TimeTableDto> temp = [];
+    for (var element in companySchedule) {
+      temp.add(TimeTableDto(
+          weekday: _reservationUtils.getWeekDayNum(element.weekDay),
+          timetable: _reservationUtils.getTimeTableList(
+            wholeTime: element.detailSchedule.openTime,
+            lunchTime: element.detailSchedule.lunchTime,
+            dinnerTime: element.detailSchedule.dinnerTime,
+          )));
+    }
+    setWeekTimeTable.value = temp;
   }
 
   Future<void> getHolidayListWeekTimeTable() async {

@@ -126,8 +126,8 @@ class ReservationUtils {
 
     // wholeTime = '' 일때 추가
     var timeTable = <TimeTable>[];
-    if (wholeTime == '') {
-      wholeTime = '10:00-19:00';
+    if (wholeTime.isEmpty) {
+      wholeTime = '10:00-20:00';
     }
     var openForeword = getDateTimeTr(getSliceTime(wholeTime), 0);
     var openBackward = getDateTimeTr(getSliceTime(wholeTime), 1);

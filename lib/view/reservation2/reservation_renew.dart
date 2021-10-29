@@ -42,26 +42,29 @@ class ReservationRenew extends StatelessWidget {
           children: [
             Column(
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _datePicker(context),
-                    _divider(),
-                    _timePicker(),
-                    _divider(),
-                    Obx(
-                      () => IgnorePointer(
-                        ignoring: !ReservationControllerReal.to.visible.value,
-                        child: AnimatedOpacity(
-                          opacity: ReservationControllerReal.to.visible.value
-                              ? 1.0
-                              : 0.0,
-                          duration: const Duration(milliseconds: 100),
-                          child: TimeBoxRenew(),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _datePicker(context),
+                      _divider(),
+                      _timePicker(),
+                      _divider(),
+                      Obx(
+                        () => IgnorePointer(
+                          ignoring: !ReservationControllerReal.to.visible.value,
+                          child: AnimatedOpacity(
+                            opacity: ReservationControllerReal.to.visible.value
+                                ? 1.0
+                                : 0.0,
+                            duration: const Duration(milliseconds: 100),
+                            child: TimeBoxRenew(),
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ],
             ),
