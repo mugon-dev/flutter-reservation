@@ -206,9 +206,6 @@ class ReservationControllerReal extends GetxController {
         }
       }
     }
-    monthDayList.forEach((element) {
-      print(element.toJson());
-    });
     this.monthDayList.value = monthDayList;
   }
 
